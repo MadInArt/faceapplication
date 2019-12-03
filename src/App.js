@@ -74,7 +74,7 @@ class App extends Component {
 
  onButtonClick = () => {
     this.setState({imageUrl: this.state.input});
-     fetch('https://young-bayou-84416.herokuapp.com/imageurl', {
+     fetch('https://morning-plains-16860.herokuapp.com/imageurl', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -84,7 +84,7 @@ class App extends Component {
       .then(response=>response.json())
       .then(response => {
         if (response) {
-          fetch('https://young-bayou-84416.herokuapp.com/image', {
+          fetch('https://morning-plains-16860.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
