@@ -7,7 +7,6 @@ import FaceRecognition from './Components/FaceRecognition/FaceRecognition'
 import RequestForm from './Components/RequestForm/RequestForm'
 import Particles from 'react-particles-js' 
 import Register from './Components/Register/Register'
-import 'tachyons'
 import './App.css';
 
 const ParticlesSet = {
