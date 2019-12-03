@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "clarifai": "^2.9.1",
-     "tachyons": "^4.10.0",
     "particles.js": "^2.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -32,8 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
- }
-  // "devDependencies": {
-   
-  // }
+  },
+  "devDependencies": {
+    "tachyons": "^4.10.0"
+  }
 }
