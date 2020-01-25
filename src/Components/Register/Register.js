@@ -6,7 +6,9 @@ class Register extends React.Component {
     this.state = {
       email: '',
       password: '',
-      name: ''
+      name: '',
+      errorRegister:false,
+
     }
   }
 
@@ -23,7 +25,8 @@ class Register extends React.Component {
   }
 
   onSubmitSignIn = () => {
-    fetch('https://morning-plains-16860.herokuapp.com/register', {
+      if (this.state.email && this.state.password && this.state.name){
+            fetch('https://morning-plains-16860.herokuapp.com/register', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -40,6 +43,13 @@ class Register extends React.Component {
         }
       })
   }
+  else {
+        this.setState({
+          errorRegister:true,
+        })
+  }
+      }
+  
 
   render() {
     return (
@@ -87,11 +97,20 @@ class Register extends React.Component {
                 value="Register"
               />
             </div>
+             {this.state.errorRegister ? errorRegister() : ""}
           </div>
         </main>
       </article>
     );
   }
 }
+const errorRegister  = props => {
+      return (
+        <div className="mx-5 ttu tracked b" role="alert">
+             <p>Please fill</p>
+             <p>all the fields</p>
+        </div>
+      );
+};
 
 export default Register;

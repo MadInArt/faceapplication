@@ -5,7 +5,9 @@ class Signin extends React.Component {
     super(props);
     this.state = {
       signInEmail: '',
-      signInPassword: ''
+      signInPassword: '',
+      errorEmptyField: false,
+      errorWrongCred:false,
     }
   }
 
@@ -17,7 +19,10 @@ class Signin extends React.Component {
     this.setState({signInPassword: event.target.value})
   }
 
-  onSubmitSignIn = () => {
+  
+  onSubmitSignIn = props => {
+ 
+  if ( this.state.signInEmail && this.state.signInPassword ) {
     fetch('https://morning-plains-16860.herokuapp.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -29,13 +34,32 @@ class Signin extends React.Component {
       .then(response => response.json())
       .then(user  => {
         if (user.id) {
-            this.props.UploadUser(user);
+           this.props.UploadUser(user);
            this.props.onRouteChange('Home');
         }
+         else {
+            this.setState({
+              errorWrongCred:true,
+            })
+         }
       })
+
+      this.setState({
+        errorEmptyField:false,
+      })
+  }
+    else {
+      this.setState({
+        errorEmptyField: true,
+      });
     }
+  }
+
+
+
   render() {
-    const { onRouteChange } = this.props;
+    const { onRouteChange} = this.props;
+
     return (
       <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -63,7 +87,7 @@ class Signin extends React.Component {
                 />
               </div>
             </fieldset>
-            <div className="">
+            <div>
               <input
                 onClick={this.onSubmitSignIn}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
@@ -72,13 +96,31 @@ class Signin extends React.Component {
               />
             </div>
             <div className="lh-copy mt3">
-              <p  onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+              <p onClick={() => onRouteChange('register')} className="f6 b underline link dim black db pointer">Register</p>
             </div>
+                {this.state.errorEmptyField ? errorEmptyField() : ""}
+                {this.state.errorWrongCred ? errorWrongCred() : ""}
           </div>
         </main>
       </article>
     );
   }
 }
+ const errorEmptyField = props => {
+      return (
+        <div className="mx-5 ttu tracked b" role="alert">
+             <p>Seems like you didn't</p>
+             <p>enter email or password.</p>
+        </div>
+      );
+};
+const errorWrongCred  = props => {
+      return (
+        <div className="mx-5 ttu tracked b" role="alert">
+             <p>Seems like your login </p>
+             <p>credentials are wrong</p>
+        </div>
+      );
+};
 
 export default Signin;

@@ -27,6 +27,7 @@ const InitialState = {
       box: {},
       route: 'SignIn',
       isSignedIn: false,
+      error:false,
       user: {
         id: '',
         name: '',
