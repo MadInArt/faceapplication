@@ -1,4 +1,4 @@
-import React from 'react';
+    import React from 'react';
 
 class Signin extends React.Component {
   constructor(props) {
@@ -52,6 +52,7 @@ class Signin extends React.Component {
     else {
       this.setState({
         errorEmptyField: true,
+        errorWrongCred:false,
       });
     }
   }

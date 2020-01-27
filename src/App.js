@@ -7,6 +7,7 @@ import FaceRecognition from './Components/FaceRecognition/FaceRecognition'
 import RequestForm from './Components/RequestForm/RequestForm'
 import Particles from 'react-particles-js' 
 import Register from './Components/Register/Register'
+import ErrorImageLink from './error'
 import './App.css';
 
 const ParticlesSet = {
@@ -74,7 +75,8 @@ class App extends Component {
   }
 
  onButtonClick = () => {
-    this.setState({imageUrl: this.state.input});
+    if (this.state.input){
+       this.setState({imageUrl: this.state.input});
      fetch('https://morning-plains-16860.herokuapp.com/imageurl', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
@@ -97,10 +99,20 @@ class App extends Component {
               this.setState(Object.assign(this.state.user, { entries: count}))
             })
             .catch(console.log);
+            this.setState({
+                  error:false,
+              })
         }
         this.displayFaceBox(this.calculateFaceLocation(response))
       })
       .catch(err => console.log(err));
+    }
+    else {
+      console.log("blabla")
+      this.setState({
+          error:true,
+      })
+    }
   }
 
     onRouteChange = (route) => {
@@ -121,14 +133,14 @@ class App extends Component {
                     <div>
                           <Logo/>
                           <Rank
-                              name={this.state.user.name}
-                              entries={this.state.user.entries} 
+                                 name={this.state.user.name}
+                                entries={this.state.user.entries} 
                           />
                           <RequestForm  onInputChange={this.onInputChange} 
                                         onButtonClick ={this.onButtonClick}/>
-                             
-                          <FaceRecognition box ={this.state.box}
-                                           imageUrl={this.state.imageUrl}/>
+                            {this.state.error ? <ErrorImageLink/> :                        
+                              <FaceRecognition box ={this.state.box}
+                                               imageUrl={this.state.imageUrl}/> }
                     </div>
                     :(
                       this.state.route === 'SignIn'
@@ -141,5 +153,7 @@ class App extends Component {
           );
        }
       }
+
+
           
 export default App;
